@@ -59,7 +59,7 @@ public class MainVerticle extends AbstractVerticle {
 	private void createDepense(RoutingContext ctx) {
 		Depense dep = new Depense();
 		dep.setCategorie(ctx.request().getParam("categorie"));
-		dep.setDate(dateFormatter.format(new Date()));
+		dep.setDate(new Date().getTime());
 		dep.setMontant(Double.parseDouble(ctx.request().getParam("montant")));
 		
 		
@@ -74,12 +74,16 @@ public class MainVerticle extends AbstractVerticle {
 	}
 	
 	private void getDepenseByCurrentMonthAndCategorie(RoutingContext ctx) {
+		try {
 		Date currentDate= new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
 		List<Depense> depenseByMonth = daoServices.getDepenseByMonth(cal.get(Calendar.MONTH), cal.get(Calendar.YEAR), ctx.request().getParam("categorie"));
 		
 		getJSONResponse(ctx).end(new JsonObject().put("result", depenseByMonth).encodePrettily());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void getDepenseByMonthAndCategorie(RoutingContext ctx) {

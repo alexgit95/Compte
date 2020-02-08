@@ -10,7 +10,7 @@ public class Depense {
 	
 	private String id;
 	private double montant;
-	private String date;
+	private long date;
 	private String categorie;
 	
 	@DynamoDBHashKey(attributeName="id")
@@ -28,15 +28,16 @@ public class Depense {
 	public void setMontant(double montant) {
 		this.montant = montant;
 	}
-	@DynamoDBAttribute(attributeName="date")  
-	public String getDate() {
+	
+	@DynamoDBAttribute(attributeName="datedepense")  
+	public long getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 	
-	@DynamoDBAttribute(attributeName="categorie")  
+	@DynamoDBHashKey(attributeName="categorie")  
 	public String getCategorie() {
 		return categorie;
 	}
